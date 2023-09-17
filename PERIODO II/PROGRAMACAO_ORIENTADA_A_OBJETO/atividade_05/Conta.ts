@@ -27,6 +27,7 @@ export class Conta {
     }
 
     transferir(contaDestino: Conta, valor: number): boolean {
+
         if (!this.sacar(valor)) {
             return false;
         }

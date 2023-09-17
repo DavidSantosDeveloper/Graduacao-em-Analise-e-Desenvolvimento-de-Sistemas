@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Conta = void 0;
-class Conta {
+export class Conta {
     constructor(numero, nome, saldo) {
         this.numero = numero;
         this.nome = nome;
@@ -28,4 +25,3 @@ class Conta {
         return true;
     }
 }
-exports.Conta = Conta;
