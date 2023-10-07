@@ -1,8 +1,6 @@
 import { Postagem } from "./Postagem.js";
 class Microblog {
-    constructor() {
-        this.listaDePostagens = [];
-    }
+    listaDePostagens = [];
     verificar_se_ja_existe_uma_postagem_com_um_id_especifico(id_postagem) {
         let resultado_existe_postagem_com_um_id_especifico_na_lista_da_postagem = false;
         for (let indice_atual = 0; indice_atual < this.listaDePostagens.length; indice_atual++) {

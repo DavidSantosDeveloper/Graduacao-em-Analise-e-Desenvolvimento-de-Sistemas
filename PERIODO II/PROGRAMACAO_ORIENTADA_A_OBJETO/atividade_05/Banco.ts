@@ -2,10 +2,10 @@ import {Conta} from "./Conta.js"
 
 
 export class Banco {
-    contas: Conta[] = []
+   private contas: Conta[] = []
 
-    inserir(conta: Conta): void {
-        let retorno_da_pesquisa_pelo_numero_da_conta=this.consultar(conta.numero)
+    public inserir(conta: Conta): void {
+        let retorno_da_pesquisa_pelo_numero_da_conta=this.consultar(conta.getNumero())
        
        console.log(retorno_da_pesquisa_pelo_numero_da_conta)
        if(retorno_da_pesquisa_pelo_numero_da_conta==null){
@@ -26,11 +26,11 @@ export class Banco {
         
     }
 
-    consultar(numero: string): Conta {
+    public consultar(numero: string): Conta {
         let contaProcurada!: Conta;
 
         for (let i: number = 0; i < this.contas.length; i++) {
-            if (this.contas[i].numero == numero) {
+            if (this.contas[i].getNumero() == numero) {
                 contaProcurada = this.contas[i];
                 break;
             }
@@ -39,11 +39,11 @@ export class Banco {
         return contaProcurada;
     }
 
-    consultarPorIndice(numero: string): number {
+    private consultarPorIndice(numero: string): number {
         let indiceProcurado: number = -1;
 
         for (let i: number = 0; i < this.contas.length; i++) {
-            if (this.contas[i].numero == numero) {
+            if (this.contas[i].getNumero()== numero) {
                 indiceProcurado = i;
                 break;
             }
@@ -52,16 +52,16 @@ export class Banco {
         return indiceProcurado;
     }
 
-    alterar(conta: Conta): void {
+    public alterar(conta: Conta): void {
         let indiceProcurado: number =
-                this.consultarPorIndice(conta.numero);
+                this.consultarPorIndice(conta.getNumero());
         
         if (indiceProcurado != -1) {
             this.contas[indiceProcurado] = conta;
         }
     }
 
-    excluir(numero: string): void {
+    public excluir(numero: string): void {
         let indiceProcurado = this.consultarPorIndice(numero);
 
         if (indiceProcurado != -1) {
@@ -73,7 +73,7 @@ export class Banco {
         }
     }
 
-    sacar(numero: string, valor: number): void {
+    public sacar(numero: string, valor: number): void {
         let indiceProcurado: number = this.consultarPorIndice(numero);
 
         if (indiceProcurado != -1) {
@@ -82,10 +82,10 @@ export class Banco {
         }
     }
 
-    tranferir(contaOrigem:Conta,contaDestino:Conta,valor_a_ser_transferido:number){
+    public tranferir(contaOrigem:Conta,contaDestino:Conta,valor_a_ser_transferido:number){
         //consulta pela existencia das contas
-        let consulta_pela_existencia_da_conta_origem=this.consultarPorIndice(contaOrigem.numero)
-        let consulta_pela_existencia_da_conta_destino=this.consultarPorIndice(contaDestino.numero)
+        let consulta_pela_existencia_da_conta_origem=this.consultarPorIndice(contaOrigem.getNumero())
+        let consulta_pela_existencia_da_conta_destino=this.consultarPorIndice(contaDestino.getNumero())
        
         //verifica se as 2 contas existem ao mesmo tempo
         let verificar_se_as_duas_contas_existem:boolean=consulta_pela_existencia_da_conta_origem!=-1 && consulta_pela_existencia_da_conta_destino!=-1 
@@ -96,30 +96,38 @@ export class Banco {
         }
     }
 
-    contar_quantidade_de_contas():number{
+    public contar_quantidade_de_contas():number{
         return this.contas.length
     }
 
-    somar_saldo_de_todas_as_contas(): number{
+    public somar_saldo_de_todas_as_contas(): number{
         let soma_saldo:number=0
 
         for (const conta_atual of this.contas) {
-            soma_saldo+=conta_atual.saldo
+            soma_saldo+=conta_atual.getSaldo()
         }
 
         return soma_saldo
     }
 
-    calcular_media_dos_saldos_das_contas():number{
+    public calcular_media_dos_saldos_das_contas():number{
 
         return this.somar_saldo_de_todas_as_contas() / this.contar_quantidade_de_contas()
+    }
+
+
+    public getContas(){
+        return this.contas
+    }
+    public setContas(novas_contas:Conta[]){
+        this.contas=novas_contas
     }
 
 
 
 }
 
-
+/*
 
 let banco=new Banco()
 banco.inserir(new Conta("123","davi",100))
@@ -133,3 +141,5 @@ R$  ${banco.somar_saldo_de_todas_as_contas()}
 conta(s) existente(s): ${banco.contar_quantidade_de_contas()} conta(s).
 ------------------------------------------
 `)
+
+*/

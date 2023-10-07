@@ -1,10 +1,7 @@
-import { Conta } from "./Conta.js";
 export class Banco {
-    constructor() {
-        this.contas = [];
-    }
+    contas = [];
     inserir(conta) {
-        let retorno_da_pesquisa_pelo_numero_da_conta = this.consultar(conta.numero);
+        let retorno_da_pesquisa_pelo_numero_da_conta = this.consultar(conta.getNumero());
         console.log(retorno_da_pesquisa_pelo_numero_da_conta);
         if (retorno_da_pesquisa_pelo_numero_da_conta == null) {
             this.contas.push(conta);
@@ -24,7 +21,7 @@ export class Banco {
     consultar(numero) {
         let contaProcurada;
         for (let i = 0; i < this.contas.length; i++) {
-            if (this.contas[i].numero == numero) {
+            if (this.contas[i].getNumero() == numero) {
                 contaProcurada = this.contas[i];
                 break;
             }
@@ -34,7 +31,7 @@ export class Banco {
     consultarPorIndice(numero) {
         let indiceProcurado = -1;
         for (let i = 0; i < this.contas.length; i++) {
-            if (this.contas[i].numero == numero) {
+            if (this.contas[i].getNumero() == numero) {
                 indiceProcurado = i;
                 break;
             }
@@ -42,7 +39,7 @@ export class Banco {
         return indiceProcurado;
     }
     alterar(conta) {
-        let indiceProcurado = this.consultarPorIndice(conta.numero);
+        let indiceProcurado = this.consultarPorIndice(conta.getNumero());
         if (indiceProcurado != -1) {
             this.contas[indiceProcurado] = conta;
         }
@@ -65,8 +62,8 @@ export class Banco {
     }
     tranferir(contaOrigem, contaDestino, valor_a_ser_transferido) {
         //consulta pela existencia das contas
-        let consulta_pela_existencia_da_conta_origem = this.consultarPorIndice(contaOrigem.numero);
-        let consulta_pela_existencia_da_conta_destino = this.consultarPorIndice(contaDestino.numero);
+        let consulta_pela_existencia_da_conta_origem = this.consultarPorIndice(contaOrigem.getNumero());
+        let consulta_pela_existencia_da_conta_destino = this.consultarPorIndice(contaDestino.getNumero());
         //verifica se as 2 contas existem ao mesmo tempo
         let verificar_se_as_duas_contas_existem = consulta_pela_existencia_da_conta_origem != -1 && consulta_pela_existencia_da_conta_destino != -1;
         if (verificar_se_as_duas_contas_existem) {
@@ -79,22 +76,33 @@ export class Banco {
     somar_saldo_de_todas_as_contas() {
         let soma_saldo = 0;
         for (const conta_atual of this.contas) {
-            soma_saldo += conta_atual.saldo;
+            soma_saldo += conta_atual.getSaldo();
         }
         return soma_saldo;
     }
     calcular_media_dos_saldos_das_contas() {
         return this.somar_saldo_de_todas_as_contas() / this.contar_quantidade_de_contas();
     }
+    getContas() {
+        return this.contas;
+    }
+    setContas(novas_contas) {
+        this.contas = novas_contas;
+    }
 }
-let banco = new Banco();
-banco.inserir(new Conta("123", "davi", 100));
-banco.inserir(new Conta("4", "joao", 200));
-banco.inserir(new Conta("123", "pedro", 200));
-console.log(banco);
+/*
+
+let banco=new Banco()
+banco.inserir(new Conta("123","davi",100))
+banco.inserir(new Conta("4","joao",200))
+banco.inserir(new Conta("123","pedro",200))
+console.log(banco)
+
 console.log(`-----------------------------
 Saldo Total
 R$  ${banco.somar_saldo_de_todas_as_contas()}
 conta(s) existente(s): ${banco.contar_quantidade_de_contas()} conta(s).
 ------------------------------------------
-`);
+`)
+
+*/

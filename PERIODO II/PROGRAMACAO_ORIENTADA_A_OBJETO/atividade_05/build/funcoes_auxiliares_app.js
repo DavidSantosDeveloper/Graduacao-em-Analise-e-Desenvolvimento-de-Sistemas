@@ -10,13 +10,16 @@ export function cadrastrar(banco) {
     let saldo = Number(input('Digite o saldo da conta (R$): '));
     let conta = new Conta(numero, titular, saldo);
     banco.inserir(conta);
+    console.log("\n");
+    console.log(banco);
+    console.log("\n");
 }
 // FUNCAO DA OPCAO 2
 export function consultar(banco) {
-    let titular_da_conta = input("Digite o titular da conta:");
+    let numero_da_conta = input("Digite o numero da conta:");
     let conta;
-    for (const conta_atual of banco.contas) {
-        if (conta_atual.nome == titular_da_conta) {
+    for (const conta_atual of banco.getContas()) {
+        if (conta_atual.getNumero() == numero_da_conta) {
             conta = conta_atual;
         }
     }
@@ -32,7 +35,11 @@ export function sacar(banco, id_conta, valor_saque) {
 // FUNCAO DA OPCAO 4
 export function depositar(banco, id_conta_deposito, valor_deposito) {
     let conta_pesquisada = banco.consultar(id_conta_deposito);
-    if (conta_pesquisada != undefined) {
+    //FAIL FAST
+    if (conta_pesquisada == null) {
+        input("Conta nao existente! presssione <enter>.");
+    }
+    else {
         conta_pesquisada.depositar(valor_deposito);
     }
 }
@@ -52,6 +59,9 @@ export function realizar_deposito(banco, id_conta_origem, id_conta_destino, valo
     if (verifica_se_ambas_contas_existem) {
         if (conta_origem.sacar(valor_da_transferencia) == true) {
             conta_destino.depositar(valor_da_transferencia);
+        }
+        else {
+            console.log("\n\nNao ha saldo suficiente para realizar a transferencia!!!!\n\n");
         }
     }
 }

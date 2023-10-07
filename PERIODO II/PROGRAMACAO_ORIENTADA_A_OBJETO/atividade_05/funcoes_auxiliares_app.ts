@@ -15,17 +15,19 @@ export function cadrastrar(banco:Banco): void {
     let saldo=Number(input('Digite o saldo da conta (R$): '));
     let conta: Conta= new Conta(numero,titular,saldo);
     banco.inserir(conta)
+    console.log("\n")
+    console.log(banco)
+    console.log("\n")
 }
 
 // FUNCAO DA OPCAO 2
 
 export function consultar(banco:Banco){
-    let titular_da_conta=input("Digite o titular da conta:")
-    
+    let numero_da_conta=input("Digite o numero da conta:")
     let conta!:Conta
     
-    for (const conta_atual of banco.contas) {
-        if(conta_atual.nome==titular_da_conta){
+    for (const conta_atual of banco.getContas()) {
+        if(conta_atual.getNumero()==numero_da_conta){
             conta=conta_atual
         }
     }
@@ -50,9 +52,14 @@ export function depositar(banco:Banco,id_conta_deposito:string,valor_deposito:nu
     
     let conta_pesquisada=banco.consultar(id_conta_deposito)
 
-    if(conta_pesquisada!=undefined){
+    //FAIL FAST
+    if(conta_pesquisada==null){
+        input("Conta nao existente! presssione <enter>.")
+    }
+    else{
         conta_pesquisada.depositar(valor_deposito)
     }
+
 }
 
 
@@ -81,6 +88,9 @@ export function realizar_deposito(banco:Banco,id_conta_origem:string,id_conta_de
 
         if(conta_origem.sacar(valor_da_transferencia)==true){
             conta_destino.depositar(valor_da_transferencia)
+        }
+        else{
+            console.log("\n\nNao ha saldo suficiente para realizar a transferencia!!!!\n\n")
         }
         
     }

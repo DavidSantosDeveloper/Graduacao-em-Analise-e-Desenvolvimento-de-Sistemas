@@ -1,6 +1,6 @@
 import prompt from "prompt-sync";
 import { Banco } from "./Banco.js";
-import { cadrastrar, consultar, excluir_conta, realizar_deposito, sacar, somar_dos_valores_das_contas_existentes } from './funcoes_auxiliares_app.js';
+import { cadrastrar, consultar, depositar, excluir_conta, realizar_deposito, sacar, somar_dos_valores_das_contas_existentes } from './funcoes_auxiliares_app.js';
 //criacao do input
 let input = prompt();
 //criacao do banco
@@ -8,19 +8,43 @@ let banco = new Banco();
 //MENU DE OPCOES
 let opcao = '';
 do {
-    console.log('\nBem vindo\nDigite uma opção:');
-    console.log('1 - Cadastrar 2 - Consultar 3 - Sacar\n' +
-        '4 - Depositar 5 - Excluir 6 - Transferir\n' +
-        '7 – Totalizações' +
-        '         0 - Sair\n');
+    console.log(` 
+            >>>>>>>>>>>>>>Bem vindo<<<<<<<<<<<< 
+            -Digite uma opção:
+            
+            `);
+    console.log(`
+            1 - Cadastrar 
+            2 - Consultar 
+            3 - Sacar
+            4 - Depositar 
+            5 - Excluir 
+            6 - Transferir
+            7 – Totalizações
+            0 - Sair  \n`);
     opcao = input("Opção:");
     switch (opcao) {
         case "1":
             cadrastrar(banco);
             break;
         case "2":
-            let conta_pesquisada = consultar(banco);
-            console.log(conta_pesquisada);
+            let controle_pesquisa_de_contas = true;
+            while (controle_pesquisa_de_contas) {
+                let conta_pesquisada = consultar(banco);
+                if (conta_pesquisada == null) {
+                    console.log(`Não existe uma conta com esse numero!!! \n`);
+                }
+                else {
+                    console.log(conta_pesquisada);
+                    console.log("\n");
+                }
+                let pergunta = Number(input(`\n deseja pesquisar novamente? (1-SIM 0-NAO): \n`));
+                if (pergunta == 1)
+                    continue;
+                else
+                    controle_pesquisa_de_contas = false;
+            }
+            break;
         case "3":
             let id_conta_saque = input("Digite o id da conta: ");
             let valor_saque = Number(input("Digite o valor do saque (R$): "));
@@ -29,7 +53,7 @@ do {
         case "4":
             let id_conta_deposito = input("Digite o id da conta: ");
             let valor_deposito = Number(input("Digite o valor do deposito (R$): "));
-            sacar(banco, id_conta_deposito, valor_deposito);
+            depositar(banco, id_conta_deposito, valor_deposito);
             break;
         case "5":
             let id_conta_a_ser_excluida = input("Digite o id da conta: ");

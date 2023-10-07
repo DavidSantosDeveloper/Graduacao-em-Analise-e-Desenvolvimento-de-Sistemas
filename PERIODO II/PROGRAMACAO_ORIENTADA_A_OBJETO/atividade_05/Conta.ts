@@ -1,7 +1,7 @@
 export class Conta {
-    numero: string;
-    nome: string
-    saldo: number;
+    private numero: string;
+    private nome: string
+    private saldo: number;
 
     constructor(numero: string, nome: string, saldo: number) {
         this.numero = numero;
@@ -34,5 +34,29 @@ export class Conta {
 
         contaDestino.depositar(valor);
         return true;
+    }
+
+    // ATRIBUTO  NUMEROS
+    getNumero():string{
+        return this.numero
+    }
+    setNumero(novo_numero:string){
+       this.numero=novo_numero
+    }
+
+    // ATRIBUTO  NOME
+    getNome():string{
+        return this.nome
+    }
+    setNome(novo_nome:string){
+       this.nome=novo_nome
+    }
+
+    // ATRIBUTO  SALDO
+    getSaldo():number{
+        return this.saldo
+    }
+    setSaldo(novo_saldo:number){
+       this.saldo=novo_saldo
     }
 }

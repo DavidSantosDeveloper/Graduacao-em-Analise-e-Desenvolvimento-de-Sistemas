@@ -1,4 +1,7 @@
 export class Postagem {
+    id;
+    texto;
+    quantidadeCurtidas;
     constructor(id, texto, quantidadeCurtidas) {
         this.id = id;
         this.texto = texto;
