@@ -1,0 +1,28 @@
+@startuml Diagrama
+
+class Usuario{
+  nome:string
+}
+
+class Cliente{
+
+}
+
+
+class Produto{
+id:FileFontName
+}
+
+class Compra{
+
+}
+
+
+
+
+
+Usuario "0..N  " <|--"0..N  " Cliente
+Produto -- Compra
+Usuario -- Compra
+
+@enduml

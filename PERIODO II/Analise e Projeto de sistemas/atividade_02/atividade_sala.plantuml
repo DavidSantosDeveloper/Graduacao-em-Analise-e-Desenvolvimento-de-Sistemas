@@ -1,0 +1,56 @@
+@startuml Diagrama
+
+
+class Trem{
+    tipo:string 
+    estado_atual:string
+    velocidade_atual:string
+
+    quantidade_de_pasageiros:string
+    capacidade_m3:float
+
+    obterEstadoAtualDoTrem()
+    obterTipoDoTrem()
+    Acelerar()
+    reduzirVelocidade()
+    Parar()
+               
+}
+
+Trem -- "1..1" Motor
+class Vagao{
+    tipo:string
+    quantidade_de_Portas:Int
+    dt_inicio_trabalho:Date
+}
+Trem --"0..*" Vagao
+
+
+
+class Motor{
+   marca:string
+   potencia:string          
+}
+Motor "0..*"--Vagao
+
+
+
+
+class Rota{
+   origem:string
+   destino:string
+   pontos_de_parada:string
+}
+Rota "1..1 "--Trem
+
+
+class Localizacao{
+    segmento_de_trilho_atual:string
+    relacao_entre_trilho_e_quilometragem:Struct
+
+    retornar_posicao_atual_na_rota():string
+}
+
+Localizacao "1..1  "-- Trem
+
+@enduml

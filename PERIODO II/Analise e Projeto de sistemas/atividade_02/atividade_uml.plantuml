@@ -1,0 +1,69 @@
+@startuml Diagrama
+
+
+/'Classes nucleo'/
+class Bliblioteca{
+
+}
+Bliblioteca "1..* " o--"1..* " Cliente
+Bliblioteca "  1..* " o-- "1..* " Funcionario
+Bliblioteca "  1..* " o-- "1..* " Publicacao
+
+
+class Cliente{
+   nome:string
+   cpf:string             
+}
+
+Cliente--*Emprestimo
+
+
+/'Classes das Regras de negocio'/
+class Emprestimo{
+      id:string
+
+}
+Funcionario --* Emprestimo
+Publicacao --* Emprestimo
+
+
+class Reserva{
+    id:string
+}
+
+Funcionario--* Reserva
+Publicacao "1..* "--*"1..* " Reserva
+Cliente --* Reserva
+
+
+
+/' Generalizacoes'/
+class Publicacao{
+   id:string
+   nome:string
+   edicao:string
+   formato:string
+}
+
+
+/' Especializacoes'/
+class Livro{
+   ISBN:string
+}
+
+Publicacao <|-- Livro
+
+class Revistas{
+
+}
+Publicacao<|-- Revistas
+
+class Jornal{
+
+}
+Publicacao<|-- Jornal
+
+
+
+
+@enduml
