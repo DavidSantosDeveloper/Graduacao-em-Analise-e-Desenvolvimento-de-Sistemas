@@ -1,0 +1,2 @@
+1;texto editado com sucesso!;1;P;0;Fri Dec 08 2023 13:13:41 GMT-0300 (Horário Padrão de Brasília);2
+2;postagem avancada -stories de hj;0;PA;0;Fri Dec 08 2023 13:33:10 GMT-0300 (Horário Padrão de Brasília);2;#POO #js ;10
